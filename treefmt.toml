@@ -1,0 +1,28 @@
+[formatter.nixfmt]
+    command  = "/usr/bin/nixfmt"
+    excludes = [  ]
+    includes = [ "*.nix" ]
+    options  = [  ]
+
+[formatter.rustfmt]
+    command  = "/usr/bin/rustfmt"
+    excludes = [  ]
+    includes = [ "*.rs" ]
+    options  = [ "--config", "--edition", "2024", "skip_children=true" ]
+
+[formatter.taplo]
+    command  = "/usr/bin/taplo"
+    excludes = [  ]
+    includes = [ "*.toml" ]
+    options  = [ "format" ]
+
+[global]
+    excludes = [
+        "*.lock",
+        "*.patch",
+        ".gitignore",
+        ".gitmodules",
+        ".hgignore",
+        ".svnignore",
+    ]
+    on-unmatched = "warn"

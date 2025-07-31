@@ -1,0 +1,4 @@
+[package]
+  edition = "2024"
+  name    = "AdwaiGram"
+  version = "0.1.0"
