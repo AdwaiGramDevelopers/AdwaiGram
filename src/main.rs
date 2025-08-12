@@ -20,6 +20,10 @@ impl SimpleComponent for AboutPage {
             set_support_url: "https://t.me/paperplanechat",
             set_issue_url: "https://github.com/AdwaiGramDevelopers/AdwaiGram/issues",
             set_developers: &["Finenko Fedor https://github.com/Sk7Str1p3"],
+            set_artists: &[
+                "Mateus Santos https://github.com/swyknox",
+                "noëlle https://github.com/jannuary",
+            ],
         }
     }
 
@@ -72,9 +76,20 @@ impl SimpleComponent for MainWindow {
 mod icons {
     include!(concat!(env!("OUT_DIR"), "/icons.rs"));
 }
-fn main() {
-    relm4_icons::initialize_icons(icons::GRESOURCE_BYTES, icons::RESOURCE_PREFIX);
 
+fn initialize_custom_icons() {
+    gtk::gio::resources_register_include!("icons.gresource").unwrap();
+
+    let display = gtk::gdk::Display::default().unwrap();
+    let theme = gtk::IconTheme::for_display(&display);
+    theme.add_resource_path("/app/AdwaiGramDevelopers/AdwaiGram/icons");
+}
+
+fn main() {
     let app = RelmApp::new("app.AdwaiGramDevelopers.AdwaiGram");
+
+    //relm4_icons::initialize_icons(icons::GRESOURCE_BYTES, icons::RESOURCE_PREFIX);
+    initialize_custom_icons();
+
     app.run::<MainWindow>(());
 }
