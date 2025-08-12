@@ -1,8 +1,11 @@
 [package]
-    edition = "2024"
-    name    = "AdwaiGram"
-    version = "0.1.0"
+  edition = "2024"
+  name    = "AdwaiGram"
+  version = "0.1.0"
 
 [dependencies]
-    relm4       = { version = "0.9.1", features = [ "gnome_47", "libadwaita" ] }
-    relm4-icons = "0.9.0"
+  relm4       = { features = [ "gnome_47", "libadwaita" ], version = "0.9.1" }
+  relm4-icons = "0.10.0-beta.2"
+
+[build-dependencies]
+  relm4-icons-build = "0.10.0-beta.2"

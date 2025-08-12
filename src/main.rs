@@ -1,5 +1,5 @@
-use relm4::prelude::*;
 use adw::prelude::*;
+use relm4::prelude::*;
 
 struct AboutPage;
 
@@ -62,19 +62,18 @@ impl SimpleComponent for MainWindow {
         }
     }
 
-    fn init(
-        _init: (),
-        root: Self::Root,
-        _sender: ComponentSender<Self>,
-    ) -> ComponentParts<Self> {
+    fn init(_init: (), root: Self::Root, _sender: ComponentSender<Self>) -> ComponentParts<Self> {
         let model = MainWindow;
         let widgets = view_output!();
         ComponentParts { model, widgets }
     }
 }
 
+mod icons {
+    include!(concat!(env!("OUT_DIR"), "/icons.rs"));
+}
 fn main() {
-    relm4_icons::initialize_icons();
+    relm4_icons::initialize_icons(icons::GRESOURCE_BYTES, icons::RESOURCE_PREFIX);
 
     let app = RelmApp::new("app.AdwaiGramDevelopers.AdwaiGram");
     app.run::<MainWindow>(());

@@ -8,6 +8,7 @@ version = "0.1.0"
 dependencies = [
  "relm4",
  "relm4-icons",
+ "relm4-icons-build",
 ]
 
 [[package]]
@@ -520,17 +521,16 @@ dependencies = [
 
 [[package]]
 name = "gvdb"
-version = "0.6.1"
+version = "0.7.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "acfa8cd2aa58da96876eb6276afe617c414d5846d1229274a821c1f8e8aa9e02"
+checksum = "d5469af05ff2285b41c9e79a2c7f825cb59dff3b22791befe1aec0c8ab987791"
 dependencies = [
- "byteorder",
  "flate2",
  "quick-xml",
- "safe-transmute",
  "serde",
  "serde_json",
  "walkdir",
+ "zerocopy",
  "zvariant",
 ]
 
@@ -757,9 +757,9 @@ dependencies = [
 
 [[package]]
 name = "quick-xml"
-version = "0.31.0"
+version = "0.36.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1004a344b30a54e2ee58d66a71b32d2db2feb0a31f9a2d302bf0536f15de2a33"
+checksum = "f7649a7b4df05aed9ea7ec6f628c67c9953a43869b8bc50929569b2999d443fe"
 dependencies = [
  "memchr",
  "serde",
@@ -800,11 +800,19 @@ checksum = "1d3b924557df1cddc687b60b313c4b76620fdbf0e463afa4b29f67193ccf37f9"
 
 [[package]]
 name = "relm4-icons"
-version = "0.9.0"
+version = "0.10.0-beta.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "15242978b4e65431be4ccd5cf539d3c142518e114b7ecfa72ffd02cd6432e6e3"
+checksum = "929f301d6723d8d1fa443d764b3a1d864b287d3cb0beb889500b39cf714d5e81"
 dependencies = [
  "gtk4",
+]
+
+[[package]]
+name = "relm4-icons-build"
+version = "0.10.0-beta.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "11ffa92b81d7b55dc115e5c8555df3e585a8aec3648862e821da81a0ce0cebd3"
+dependencies = [
  "gvdb",
  "serde",
  "toml",
@@ -841,12 +849,6 @@ name = "ryu"
 version = "1.0.20"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "28d3b2b1366ec20994f1fd18c3c594f05c5dd4bc44d8bb0c1c632c8d6829481f"
-
-[[package]]
-name = "safe-transmute"
-version = "0.11.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3944826ff8fa8093089aba3acb4ef44b9446a99a16f3bf4e74af3f77d340ab7d"
 
 [[package]]
 name = "same-file"
@@ -1227,6 +1229,27 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f3edebf492c8125044983378ecb5766203ad3b4c2f7a922bd7dd207f6d443e95"
 dependencies = [
  "memchr",
+]
+
+[[package]]
+name = "zerocopy"
+version = "0.7.35"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1b9b4fd18abc82b8136838da5d50bae7bdea537c574d8dc1a34ed098d6c166f0"
+dependencies = [
+ "byteorder",
+ "zerocopy-derive",
+]
+
+[[package]]
+name = "zerocopy-derive"
+version = "0.7.35"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "fa4f8080344d4671fb4e831a13ad1e68092748387dfc4f55e356242fae12ce3e"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
 ]
 
 [[package]]
