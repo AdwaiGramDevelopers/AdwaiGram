@@ -1,14 +1,22 @@
-fn main() {
-    glib_build_tools::compile_resources(&["data"], "data/icons.gresource.xml", "icons.gresource");
+#[path = "icons/__build.rs"]
+mod icons;
+#[path = "src/__build.rs"]
+mod src;
 
-    // i likes icons.toml so
-    // TODO: read configuration from toml
+use ::std::env::var;
 
-    //relm4_icons_build::bundle_icons(
-    //    "icons.rs",
-    //    None::<&str>,
-    //    None::<&str>,
-    //    Some("icons"),
-    //    ["plus"],
-    //)
+fn main() -> Result<(), Box<dyn ::std::error::Error>> {
+    let out_dir: ::std::path::PathBuf = ::std::path::PathBuf::from(var("OUT_DIR").unwrap());
+    let mut app_id: String = "app.AdwaiGramDevelopers.AdwaiGram".to_string();
+    let profile: String = var("PROFILE").unwrap();
+
+    {
+        use src::*;
+        version::build(&profile, &mut app_id, &out_dir)?;
+        api::build(&out_dir)?;
+    }
+
+    icons::build(&app_id);
+
+    Ok(())
 }

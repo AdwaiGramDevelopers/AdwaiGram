@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<gresources>
-    <gresource prefix="app/AdwaiGramDevelopers/AdwaiGram/icons/24x24/actions">
-        <file preprocess="xml-stripblanks" alias="logo-devel.svg">icons/logo-devel.svg</file>
-    </gresource>
-</gresources>
