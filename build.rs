@@ -1,18 +1,22 @@
-use glib_build_tools;
-use relm4_icons_build;
+#[path = "icons/__build.rs"]
+mod icons;
+#[path = "src/__build.rs"]
+mod src;
 
-fn main() {
-    relm4_icons_build::bundle_icons(
-        "icon_names.rs",
-        Some("app.adwaigramdevs.adwaigram"),
-        None::<&str>,
-        None::<&str>,
-        ["send-filled", "plus"],
-    );
+use ::std::env::var;
 
-    glib_build_tools::compile_resources(
-        &["data"],
-        "data/resources.gresource.xml",
-        "compiled.gresource",
-    );
+fn main() -> Result<(), Box<dyn ::std::error::Error>> {
+    let out_dir: ::std::path::PathBuf = ::std::path::PathBuf::from(var("OUT_DIR").unwrap());
+    let mut app_id: String = "app.AdwaiGramDevelopers.AdwaiGram".to_string();
+    let profile: String = var("PROFILE").unwrap();
+
+    {
+        use src::*;
+        version::build(&profile, &mut app_id, &out_dir)?;
+        api::build(&out_dir)?;
+    }
+
+    icons::build(&app_id);
+
+    Ok(())
 }

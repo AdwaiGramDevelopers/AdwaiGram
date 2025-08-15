@@ -120,17 +120,16 @@ impl SimpleComponent for App {
 fn main() {
     let app = RelmApp::new("app.adwaigramdevs.adwaigram");
 
-    gtk::gio::resources_register_include!("compiled.gresource")
-        .expect("Failed to register resources");
+    // gtk::gio::resources_register_include!("compiled.gresource")
+    //     .expect("Failed to register resources");
 
-    let provider = gtk::CssProvider::new();
-    provider.load_from_resource("/app/adwaigram/style.css");
-    gtk::style_context_add_provider_for_display(
-        &gtk::gdk::Display::default().unwrap(),
-        &provider,
-        gtk::STYLE_PROVIDER_PRIORITY_APPLICATION,
-    );
-    relm4_icons::initialize_icons();
+    // let provider = gtk::CssProvider::new();
+    // provider.load_from_resource("/app/adwaigram/style.css");
+    // gtk::style_context_add_provider_for_display(
+    //     &gtk::gdk::Display::default().unwrap(),
+    //     &provider,
+    //     gtk::STYLE_PROVIDER_PRIORITY_APPLICATION,
+    // );
 
     app.run::<App>(());
 }

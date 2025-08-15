@@ -1,14 +1,14 @@
 [package]
-    edition = "2024"
-    name    = "AdwaiGram"
-    version = "0.1.0"
+  edition = "2024"
+  name    = "AdwaiGram"
+  version = "0.1.0"
 
 [dependencies]
-    chrono           = "0.4.41"
-    relm4            = { features = [ "gnome_47", "libadwaita" ], version = "0.9.1" }
-    relm4-components = "0.9.1"
-    relm4-icons      = "0.9.0"
+chrono = "0.4.41"
+  relm4       = { features = [ "gnome_47", "libadwaita" ], version = "0.9.1" }
+  relm4-icons = "0.10.0-beta.2"
 
 [build-dependencies]
-    glib-build-tools  = "0.21.0"
-    relm4-icons-build = "0.10.0-beta.2"
+  glib-build-tools = "0.21.0"
+  #  relm4-icons-build = "0.10.0-beta.2"
+  relm4-icons-build = { git = "https://github.com/Sk7Str1p3/icons/" }

@@ -22,7 +22,7 @@
       nixpkgs,
       crane,
       flake-utils,
-      advisory-db,
+      #advisory-db,
       treefmt,
       ...
     }:
@@ -38,7 +38,14 @@
           inherit src;
           strictDeps = true;
 
-          buildInputs = [ ];
+          buildInputs = [
+            pkgs.gtk4
+            pkgs.libadwaita
+          ];
+          nativeBuildInputs = [
+            pkgs.pkg-config
+            pkgs.wrapGAppsHook4
+          ];
           cargoArtifacts = craneLib.buildDepsOnly commonArgs;
 
           # Additional environment variables
@@ -116,7 +123,9 @@
             pkgs.nixd
             pkgs.nixfmt-rfc-style
             pkgs.taplo
-          ];
+          ]
+          ++ commonArgs.buildInputs
+          ++ commonArgs.nativeBuildInputs;
         };
         formatter = (treefmt.lib.evalModule pkgs ./treefmt.nix).config.build.wrapper;
       }
