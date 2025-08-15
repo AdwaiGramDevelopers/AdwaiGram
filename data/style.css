@@ -1,0 +1,12 @@
+.badge {
+    border-radius: 16px;
+    font-weight: bold;
+    padding: 0px 6px;
+    color: @theme_fg_color;
+    background-color: @theme_selected_bg_color;
+}
+
+.small-pill {
+    border-radius: 20px;
+    padding: 6px 10px;
+}
