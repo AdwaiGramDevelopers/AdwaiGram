@@ -977,7 +977,7 @@ dependencies = [
 [[package]]
 name = "relm4-icons-build"
 version = "0.10.0-beta.1"
-source = "git+https://github.com/Sk7Str1p3/icons/#8ea975cd8dc0d29088c564709b61e7688290c3fc"
+source = "git+https://github.com/medveed/Relm4-Icons#72563e64459a87b54c69258883d34d98a6809946"
 dependencies = [
  "gvdb",
  "serde",

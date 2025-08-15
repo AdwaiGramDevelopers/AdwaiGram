@@ -4,6 +4,6 @@ pub fn build(app_id: &str) {
         Some(app_id),
         None::<&str>,
         Some("icons"),
-        <[&str; 0]>::default(),
+        ["plus", "send-filled", "network-workgroup"],
     );
 }

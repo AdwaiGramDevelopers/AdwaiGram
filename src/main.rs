@@ -3,16 +3,17 @@ use relm4::adw;
 use relm4::adw::prelude::*;
 use relm4::gtk;
 use relm4::gtk::glib::random_int;
-use relm4::gtk::prelude::*;
 use relm4::typed_view::list::TypedListView;
-use relm4::{ComponentParts, ComponentSender, RelmApp, RelmWidgetExt, SimpleComponent};
+use relm4::{Component, ComponentParts, ComponentSender, RelmApp, RelmWidgetExt, SimpleComponent};
 
-mod chat_list_item;
-use crate::chat_list_item::ChatListItem;
+mod constants;
+mod ui;
+use crate::ui::about::AboutPage;
+use crate::ui::icons;
 
 #[derive(Debug)]
 struct App {
-    chat_list: TypedListView<ChatListItem, gtk::SingleSelection>,
+    chat_list: TypedListView<ui::chat_list_item::ChatListItem, gtk::SingleSelection>,
 }
 
 #[relm4::component]
@@ -83,8 +84,14 @@ impl SimpleComponent for App {
                             },
 
                             gtk::Button {
+                                set_icon_name: icons::SEND_FILLED,
                                 add_css_class: "suggested-action",
                                 add_css_class: "small-pill",
+                                connect_clicked => move |_| {
+                                                    let parent = adw::Dialog::default();
+                                                    parent.set_visible(true);
+                                                    let _ = AboutPage::builder().launch(parent);
+                                                }
                             }
                         }
 
@@ -103,7 +110,7 @@ impl SimpleComponent for App {
             chat_list: TypedListView::with_sorting(),
         };
         for i in 1..10 {
-            model.chat_list.append(ChatListItem {
+            model.chat_list.append(ui::chat_list_item::ChatListItem {
                 chat_name: format!("Chat {i}"),
                 last_author: format!("User {i}"),
                 last_content: format!("Message {i}"),
@@ -120,16 +127,18 @@ impl SimpleComponent for App {
 fn main() {
     let app = RelmApp::new("app.adwaigramdevs.adwaigram");
 
-    // gtk::gio::resources_register_include!("compiled.gresource")
-    //     .expect("Failed to register resources");
+    gtk::gio::resources_register_include!("compiled.gresource")
+        .expect("Failed to register resources");
 
-    // let provider = gtk::CssProvider::new();
-    // provider.load_from_resource("/app/adwaigram/style.css");
-    // gtk::style_context_add_provider_for_display(
-    //     &gtk::gdk::Display::default().unwrap(),
-    //     &provider,
-    //     gtk::STYLE_PROVIDER_PRIORITY_APPLICATION,
-    // );
+    let provider = gtk::CssProvider::new();
+    provider.load_from_resource("/app/adwaigram/style.css");
+    gtk::style_context_add_provider_for_display(
+        &gtk::gdk::Display::default().unwrap(),
+        &provider,
+        gtk::STYLE_PROVIDER_PRIORITY_APPLICATION,
+    );
+
+    relm4_icons::initialize_icons(icons::GRESOURCE_BYTES, icons::RESOURCE_PREFIX);
 
     app.run::<App>(());
 }

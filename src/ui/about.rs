@@ -1,5 +1,5 @@
-use ::relm4::prelude::*;
 use relm4::adw::prelude::AdwDialogExt as _;
+use relm4::prelude::*;
 
 use crate::constants::PROFILE;
 
@@ -27,7 +27,6 @@ impl SimpleComponent for AboutPage {
                 "Finenko Fedor https://github.com/Sk7Str1p3",
                 "Marco Melorio (orig. author) https://github.com/melix99",
                 "Marcus Behrendt https://github.com/marhkb",
-
             ],
             set_artists: &[
                 "Mateus Santos https://github.com/swyknox",

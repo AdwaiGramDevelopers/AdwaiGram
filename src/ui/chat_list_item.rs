@@ -1,7 +1,4 @@
-use std::sync::*;
-
 use relm4::adw;
-use relm4::gtk::gdk;
 use relm4::gtk::prelude::*;
 use relm4::{self, RelmWidgetExt};
 use relm4::{gtk, typed_view::list::RelmListItem};
@@ -27,7 +24,7 @@ impl RelmListItem for ChatListItem {
     type Root = gtk::Box;
     type Widgets = ChatListItemWidgets;
 
-    fn setup(list_item: &gtk::ListItem) -> (Self::Root, Self::Widgets) {
+    fn setup(_: &gtk::ListItem) -> (Self::Root, Self::Widgets) {
         relm4::view! {
             hbox = gtk::Box {
                 set_margin_all: 5,
