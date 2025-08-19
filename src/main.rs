@@ -84,7 +84,7 @@ impl SimpleComponent for App {
                             },
 
                             gtk::Button {
-                                set_icon_name: icons::SEND_FILLED,
+                                set_icon_name: icons::shipped::SEND_FILLED,
                                 add_css_class: "suggested-action",
                                 add_css_class: "small-pill",
                                 connect_clicked => move |_| {

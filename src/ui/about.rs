@@ -14,8 +14,8 @@ impl SimpleComponent for AboutPage {
     view! {
         adw::AboutDialog {
             set_application_icon: match PROFILE {
-                "release" => crate::ui::icons::LOGO_MAIN,
-                _ => crate::ui::icons::LOGO_DEVEL,
+                "release" => crate::ui::icons::custom::logo::MAIN,
+                _ => crate::ui::icons::custom::logo::DEVEL,
             },
             set_application_name: crate::constants::APP_NAME,
             set_version: crate::constants::VERSION,

@@ -1,7 +1,5 @@
 #[path = "data/__build.rs"]
 mod data;
-#[path = "icons/__build.rs"]
-mod icons;
 #[path = "src/__build.rs"]
 mod src;
 
@@ -16,8 +14,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     src::version::build(&profile, &mut app_id, &out_dir)?;
     src::api::build(&out_dir)?;
 
-    icons::build(&app_id);
-    data::build();
+    data::build(&app_id);
 
     Ok(())
 }
