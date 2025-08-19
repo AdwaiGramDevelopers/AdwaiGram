@@ -6,11 +6,12 @@ mod icons;
 mod src;
 
 use std::env::var;
+use std::path::PathBuf;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let out_dir: std::path::PathBuf = std::path::PathBuf::from(var("OUT_DIR").unwrap());
-    let mut app_id: String = "app.AdwaiGramDevelopers.AdwaiGram".to_string();
-    let profile: String = var("PROFILE").unwrap();
+    let out_dir = PathBuf::from(var("OUT_DIR").unwrap());
+    let mut app_id = "app.adwaigramdevs.adwaigram".to_string();
+    let profile = var("PROFILE").unwrap();
 
     src::version::build(&profile, &mut app_id, &out_dir)?;
     src::api::build(&out_dir)?;

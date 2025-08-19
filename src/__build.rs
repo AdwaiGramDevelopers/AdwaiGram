@@ -1,16 +1,17 @@
+use std::env::var;
+use std::error::Error;
+use std::fs::write;
+use std::path::Path;
+
 pub mod version {
-    use ::std::fs::write;
-    pub fn build(
-        profile: &str,
-        app_id: &mut String,
-        out: &::std::path::Path,
-    ) -> Result<(), Box<dyn ::std::error::Error>> {
-        let mut version: String = ::std::env::var("CARGO_PKG_VERSION").unwrap();
+    use super::*;
+    pub fn build(profile: &str, app_id: &mut String, out: &Path) -> Result<(), Box<dyn Error>> {
+        let mut version: String = var("CARGO_PKG_VERSION").unwrap();
 
         match profile {
             "release" => (),
             _ => {
-                let version_postfix: String = match ::std::process::Command::new("git")
+                let version_postfix = match std::process::Command::new("git")
                     .args(["rev-parse", "--short", "HEAD"])
                     .output()
                 {
@@ -29,11 +30,11 @@ pub mod version {
 }
 
 pub mod api {
-    use ::std::fs::write;
-    pub fn build(out: &::std::path::Path) -> Result<(), Box<dyn ::std::error::Error>> {
-        let api_id: String = ::std::env::var("TG_API_ID").unwrap_or_else(|_| 17349.to_string());
-        let api_hash: String = ::std::env::var("TG_API_HASH")
-            .unwrap_or_else(|_| "344583e45741c457fe1862106095a5eb".to_string());
+    use super::*;
+
+    pub fn build(out: &Path) -> Result<(), Box<dyn Error>> {
+        let api_id = var("TG_API_ID").unwrap_or(17349.to_string());
+        let api_hash = var("TG_API_HASH").unwrap_or("344583e45741c457fe1862106095a5eb".to_string());
 
         write(out.join("api_id"), api_id)?;
         write(out.join("api_hash"), api_hash)?;
