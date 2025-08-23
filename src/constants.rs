@@ -18,19 +18,21 @@
 /// # Examples
 ///
 /// ## Release version
-/// ```ignore
+/// ```
 /// pub const VERSION: &str = "0.1.0";
 /// ```
 ///
 /// ## Development versions with Git
-/// ```ignore
-/// // Clean working tree
+/// ### Clean working tree
+/// ```
 /// pub const VERSION: &str = "0.1.0-1a2b3c4";
-///
-/// // Uncommitted changes present
+/// ```
+/// ### Uncommitted changes present
+/// ```
 /// pub const VERSION: &str = "0.1.0-1a2b3c4-dirty";
-///
-/// // Git unavailable
+/// ```
+/// ### Git unavailable
+/// ```
 /// pub const VERSION: &str = "0.1.0-devel";
 /// ```
 pub const VERSION: &str = version();
