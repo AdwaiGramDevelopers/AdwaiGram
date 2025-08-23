@@ -42,7 +42,7 @@ const fn version() -> &'static str {
         &_ => git_version::git_version!(
             args = ["--always", "--dirty=-dirty"],
             prefix = concat!(env!("CARGO_PKG_VERSION"), "-"),
-            fallback = "devel"
+            fallback = concat!(env!("CARGO_PKG_VERSION"), "-devel")
         ),
     }
 }
