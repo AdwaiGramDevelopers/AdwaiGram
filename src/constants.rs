@@ -94,3 +94,28 @@ const fn tg_api_id() -> u32 {
 /// TG_API_ID=1234567 TG_API_HASH="e017693e4a04a59d0b0f400fe98177fe" cargo build
 /// ```
 pub const TG_API_HASH: &str = env!("TG_API_HASH");
+
+/// Application name
+/// computed at compile time, depends on the build profile and Git availability.
+///
+/// - **Release** builds (`--release`): Use default app name "AdwaiGram"
+/// - **Debug** builds: Add `(Devel)` suffix
+///
+/// # Examples
+///
+/// ## Release version
+/// ```
+/// pub const APP_NAME: &str = "AdwaiGram";
+/// ```
+///
+/// ## Development version
+/// ```
+/// pub const APP_NAME: &str = "AdwaiGram (Devel)";
+/// ```
+pub const APP_NAME: &str = app_name();
+const fn app_name() -> &'static str {
+    match env!("PROFILE").as_bytes() {
+        b"release" => "AdwaiGram",
+        &_ => "AdwaiGram (Devel)",
+    }
+}
