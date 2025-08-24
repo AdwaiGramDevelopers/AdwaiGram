@@ -34,7 +34,8 @@ fn main() {
 }
 
 fn create_bundle(lang: &str) -> FluentBundle<FluentResource, IntlLangMemoizer> {
-    let path_str = format!("/home/mantis/Документы/projects/Desktop/AdwaiGram/langs/{lang}.ftl");
+    let manifest_dir = env!("CARGO_MANIFEST_DIR");
+    let path_str = format!("{}/langs/{}.ftl", manifest_dir, lang);
     let path = Path::new(&path_str);
     let ftl_string = cat(path).unwrap();
     let res = FluentResource::try_new(ftl_string).expect("Failed to parse an FTL string.");
