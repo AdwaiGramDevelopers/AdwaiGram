@@ -1,38 +1,79 @@
-use std::fs::File;
-use std::io;
-use std::io::Read as _;
-use std::path::Path;
+//! # Internationalization (i18n)
+//! This module provides comprehensive internationalization support for loading and managing
+//! localized resources at runtime using `rust-embed` and `fluent`.
+//!
+//! Localization files are being embedded during compilation using `rust-embed` and provides
+//! runtime language selection based on the user's desktop environment preferences.
 
-use fluent::bundle::FluentBundle;
-use fluent::FluentResource;
-use intl_memoizer::IntlLangMemoizer;
-use unic_langid::langid;
+use std::sync::LazyLock;
 
-pub fn create_bundle(lang: &str) -> FluentBundle<FluentResource, IntlLangMemoizer> {
-    let manifest_dir = env!("CARGO_MANIFEST_DIR");
-    let path_str = format!("{}/langs/{}.ftl", manifest_dir, lang);
-    let path = Path::new(&path_str);
-    let ftl_string = cat(path).unwrap();
-    let res = FluentResource::try_new(ftl_string).expect("Failed to parse an FTL string.");
+use i18n_embed::DefaultLocalizer;
+use i18n_embed::DesktopLanguageRequester;
+use i18n_embed::LanguageLoader;
+use i18n_embed::Localizer as _;
+use i18n_embed::fluent::FluentLanguageLoader;
+use i18n_embed::fluent::fluent_language_loader;
+use rust_embed::RustEmbed;
 
-    let langid_lg = match lang {
-        "ru_RU" => langid!("ru-RU"),
-        _ => langid!("en-US"),
-    };
-    let mut bundle = FluentBundle::new(vec![langid_lg]);
+/// A RustEmbed structure that embeds all localization files from the directory set in `folder` attribute
+/// into the binary during compilation. This allows the application to access translation files without
+/// requiring external file system access at runtime.
+#[derive(RustEmbed)]
+#[folder = "locales/"]
+struct Localizations;
 
-    bundle
-        .add_resource(res)
-        .expect("Failed to add FTL resources to the bundle.");
+/// Lazily-initialized static instance of `FluentLanguageLoader`
+/// that loads the fallback language at startup.
+pub static LOCALIZATIONS_LOADER: LazyLock<FluentLanguageLoader> = LazyLock::new(|| {
+    let loader = fluent_language_loader!();
 
-    bundle
+    loader
+        .load_fallback_language(&Localizations)
+        .expect("Failed to load embedded languages.");
+
+    loader
+});
+
+fn localizer() -> DefaultLocalizer<'static> {
+    DefaultLocalizer::new(&*LOCALIZATIONS_LOADER, &Localizations)
 }
 
-pub fn cat(path: &Path) -> io::Result<String> {
-    let mut f = File::open(path)?;
-    let mut s = String::new();
-    match f.read_to_string(&mut s) {
-        Ok(_) => Ok(s),
-        Err(e) => Err(e),
+/// Initializes the internationalization system by detecting the user's preferred languages
+/// from the desktop environment and configuring the localizer accordingly.
+/// This function should be called early in the application startup process.
+pub fn init() {
+    let localizer = localizer();
+    let requested_languages = DesktopLanguageRequester::requested_languages();
+
+    if let Err(err) = localizer.select(&requested_languages) {
+        eprintln!("Failed to set languages: {err}");
     }
+}
+
+/// Get translated message by key, with optional translation parameters
+///
+/// # Examples:
+///
+/// Without parameters:
+///
+/// ```no_run
+/// println!("Translated message: {}", tr!("developers"));
+/// ```
+///
+/// With parameters:
+///
+/// ```no_run
+/// println!("Translated message: {}", tr!("last-seen", {
+///     "time" = "5 minutes ago"
+/// }));
+/// ```
+#[macro_export]
+macro_rules! tr {
+    ($msg_id:literal) => {{
+        i18n_embed_fl::fl!($crate::i18n::LOCALIZATIONS_LOADER, $msg_id)
+    }};
+
+     ($message_id:literal, $($args:expr),*) => {{
+        i18n_embed_fl::fl!($crate::i18n::LOCALIZATIONS_LOADER, $message_id, $($args), *)
+    }};
 }
