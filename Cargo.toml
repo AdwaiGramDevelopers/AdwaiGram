@@ -4,10 +4,19 @@
     version = "0.1.0"
 
 [dependencies]
-    chrono      = "0.4.41"
-    const-str   = "0.6.4"
-    git-version = "0.3.9"
-    relm4-icons = "0.10.0-beta.2"
+    chrono        = "0.4.41"
+    const-str     = "0.6.4"
+    git-version   = "0.3.9"
+    i18n-embed-fl = "0.10.0"
+    intl-memoizer = "0.5.3"
+    relm4-icons   = "0.10.0-beta.2"
+    rust-embed    = "8.7.2"
+    [dependencies.i18n-embed]
+        features = [ "desktop-requester", "fluent-system" ]
+        version  = "0.16.0"
+    [dependencies.unic-langid]
+        features = [ "macros" ]
+        version  = "0.9.6"
     [dependencies.relm4]
         features = [ "gnome_47", "libadwaita" ]
         version  = "0.9.1"
