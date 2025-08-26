@@ -23,6 +23,4 @@
 
 [build-dependencies]
     glib-build-tools = "0.21.0"
-    #relm4-icons-build = "0.10.0-beta.2"
-    [build-dependencies.relm4-icons-build]
-        git = "https://github.com/Sk7Str1p3/icons"
+    relm4-icons-build = "0.10.0-beta.4"
