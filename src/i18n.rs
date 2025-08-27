@@ -19,7 +19,7 @@ use rust_embed::RustEmbed;
 /// into the binary during compilation. This allows the application to access translation files without
 /// requiring external file system access at runtime.
 #[derive(RustEmbed)]
-#[folder = "locales/"]
+#[folder = "__locales_compiled/"]
 struct Localizations;
 
 /// Lazily-initialized static instance of `FluentLanguageLoader`
