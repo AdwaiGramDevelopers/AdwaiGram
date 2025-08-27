@@ -1,23 +1,5 @@
-//! Build script module for generating application constants.
-//!
-//! This module is responsible for setting constants in `src/constants.rs`.
-//!
-//! # Processed constants
-//! - `VERSION`: Project version (with optional info depending on build profile)
-//! - `TG_API_ID`: Telegram API identifier (with fallback value for development purposes)
-//! - `TG_API_HASH`: Telegram API hash (with fallback value for development purposes)
-
 use std::env::var;
 
-/// Configures compile-time environment variables for constants generation.
-///
-/// # Processed environment variables
-/// - `TG_API_ID`: Falls back to `17349` if not set
-/// - `TG_API_HASH`: Falls back to `"344583e45741c457fe1862106095a5eb"` if not set
-/// - `BUILD_PROFILE`: Automatically detected from cargo profile
-///
-/// # Panics
-/// Will panic if `TG_API_ID` is set but cannot be parsed as a valid `u32`.
 pub fn build() {
     let profile = var("PROFILE").unwrap();
     println!("cargo:rustc-env=PROFILE={}", profile);
