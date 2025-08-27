@@ -56,13 +56,13 @@ pub fn init() {
 ///
 /// Without parameters:
 ///
-/// ```no_run
+/// ```ignore
 /// println!("Translated message: {}", tr!("developers"));
 /// ```
 ///
 /// With parameters:
 ///
-/// ```no_run
+/// ```ignore
 /// println!("Translated message: {}", tr!("last-seen", {
 ///     "time" = "5 minutes ago"
 /// }));
